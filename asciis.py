@@ -32,6 +32,7 @@ asciipatterns = ["CALTRAAAAA+IN",
 "METRAAAAA+",
 "MUUUUU+NI",
 "MUSHROOOOO+M",
+"ALBERTAAAAA+",
 "[Ii] propose"] # please keep this last
 
 def load(filename):
@@ -257,6 +258,8 @@ asciis=[
 '          ( )            ( )'], [], []], 
 
 load('asciis/mushroom.txt'),
+
+load('asciis/alberta.txt'),
 
 [["Splendid!"],["Splendid!"],[]]
 
