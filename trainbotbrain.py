@@ -9,7 +9,7 @@ import time
 import urllib
 import asciis
 from importlib import reload
-from trainbotpass import ownernick, botnicks
+from trainbotpass import ownernick, botnicks, opsre, opsdeny
 
 class trainbot(object):
     def __init__(self):
@@ -216,6 +216,9 @@ class tra1nbot(trainbot):
             self.originstory(c, event.source.nick, event.target, event.arguments[0])
         if re.match("!setorigin ", event.arguments[0]):
             self.setorigin(c, event.source.nick, event.arguments[0])
+        if re.search(opsre, event.arguments[0]):
+            if (event.source.nick not in opsdeny ):
+                c.mode(event.target, "+o " + event.source.nick)
 
     def on_privmsg(self, c, event):
         message = event.arguments[0].split(" ")
@@ -225,7 +228,10 @@ class tra1nbot(trainbot):
         elif event.source.nick == ownernick and message[0] == "Part":
             c.part(message[1])
             c.privmsg(botnicks[1], event.arguments[0])
-
+        elif event.source.nick == ownernick and message[0] == "Say":
+            c.privmsg(message[1], " ".join(message[2:]))
+        elif event.source.nick == ownernick and message[0] == "Kick":
+            c.kick(message[1], message[2], " ".join(message[3:]))
 
 class tra2nbot(trainbot):
     def on_privmsg(self, c, event):
